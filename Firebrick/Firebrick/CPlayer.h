@@ -1,10 +1,13 @@
 #pragma once
-#include "CCard.h"
-#include "CMinion.h"
 #include "CDamageable.h"
 #include "FirebrickMath.h"
 #include <vector>	// vector
 using namespace std;
+
+enum EPlayer { sorceress, wizard };
+
+class CCard;
+class CMinion;
 
 class CPlayer : public CDamageable
 {

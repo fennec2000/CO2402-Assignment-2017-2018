@@ -22,10 +22,10 @@ void CPlayer::TakeDamage(CMinion* attacker, int damage)
 {
 	CDamageable::TakeDamage(damage);
 	string defendant = ((player) ? "Wizard" : "Sorceress");
-	if (GetHealth() > 0)
+	/*if (GetHealth() > 0)
 		cout << attacker->GetName() << " attacks " << defendant << ": " << defendant << " health now " << GetHealth() << endl;
 	else
-		cout << attacker->GetName() << " attacks " << defendant << ": " << defendant << " killed " << endl;
+		cout << attacker->GetName() << " attacks " << defendant << ": " << defendant << " killed " << endl;*/
 }
 
 void CPlayer::TakeDamage(CPlayer* attacker, int damage)

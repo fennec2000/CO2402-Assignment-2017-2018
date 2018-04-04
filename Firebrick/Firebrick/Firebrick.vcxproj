@@ -146,8 +146,10 @@
     <ClInclude Include="CCore.h" />
     <ClInclude Include="CDamageable.h" />
     <ClInclude Include="CField.h" />
+    <ClInclude Include="CFireball.h" />
     <ClInclude Include="CMinion.h" />
     <ClInclude Include="CPlayer.h" />
+    <ClInclude Include="CSpell.h" />
     <ClInclude Include="FirebrickMath.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
@@ -157,8 +159,10 @@
     <ClCompile Include="CCore.cpp" />
     <ClCompile Include="CDamageable.cpp" />
     <ClCompile Include="CField.cpp" />
+    <ClCompile Include="CFireball.cpp" />
     <ClCompile Include="CMinion.cpp" />
     <ClCompile Include="CPlayer.cpp" />
+    <ClCompile Include="CSpell.cpp" />
     <ClCompile Include="Firebrick.cpp" />
     <ClCompile Include="stdafx.cpp" />
   </ItemGroup>

@@ -1,7 +1,7 @@
 #pragma once
 #include "CPlayer.h"
-#include "CMinion.h"
 #include "CField.h"
+#include "FirebrickMath.h"	// rand
 #include <string> // string
 #include <iostream> // cout
 #include <fstream> // ifstream
@@ -25,7 +25,6 @@ private:
 	void LoadDeck(EPlayer playerName, string inputFile);
 	void Draw(EPlayer player);
 	void Turn(EPlayer player);
-	void ActivateCard(EPlayer player, CCard* givenCard);
 public:
 	//Static access method.
 	static CCore* GetInstance();
@@ -33,7 +32,10 @@ public:
 
 	void LoadCards();
 	void PlayTurn();
-	int GetRounds() { return round; };
+	inline int GetRounds() { return round; };
 	bool GameRunning();
+	CPlayer* GetPlayer(EPlayer player);
+	inline vector<CMinion*>* GetPlayerField(EPlayer player) { return pField->GetField(player); };
+	CField* GetFieldObj() { return pField; };
 };
 

@@ -152,3 +152,19 @@ vector<CMinion*>* CField::GetField(EPlayer player)
 	return nullptr;
 }
 
+int CField::GetFieldSize(EPlayer player)
+{
+	switch (player)
+	{
+	case sorceress:
+		return sorceressField.size();
+		break;
+	case wizard:
+		return wizardField.size();
+		break;
+	default:
+		break;
+	}
+	return 0;
+}
+

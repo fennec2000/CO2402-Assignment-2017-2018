@@ -71,11 +71,14 @@ void CCore::LoadDeck(EPlayer givenPlayer, string inputFile)
 				}
 			}
 			CCard* card;
-			switch (stoi(arr[0]))
+			switch ((ECardType)stoi(arr[0]))
 			{
-			case 1:
-				card = new CMinion(arr[1], stoi(arr[2]), stoi(arr[3]), givenPlayer, ((givenPlayer) ? pWizard : pSorceress), pField->GetField(givenPlayer));
+			case Minion:
+				card = new CMinion(arr[1], stoi(arr[2]), stoi(arr[3]), givenPlayer);
 				pField->AddCardToDeck(givenPlayer, card);
+				break;
+			case Fireball:
+				//card = new CFireball();
 				break;
 			default:
 				break;
@@ -130,7 +133,8 @@ void CCore::Turn(EPlayer player)
 		break;
 	}
 	CCard* card = (*currentPlayer)->PlayCard();
-	ActivateCard(player, card);
+	cout << ((player) ? "Wizard" : "Sorceress") << " plays " << card->GetName() << endl;
+	card->Activate();
 
 	// display table
 	pField->DisplayTable(player);
@@ -144,23 +148,8 @@ void CCore::Turn(EPlayer player)
 
 		(*it)->Attack();
 	}
-		
 
 	// end
-}
-
-void CCore::ActivateCard(EPlayer player, CCard* givenCard)
-{
-	cout << ((player) ? "Wizard" : "Sorceress") << " plays " << givenCard->GetName() << endl;
-	switch (givenCard->GetType())
-	{
-	case Minion:
-		pField->AddCardToField(player, (CMinion*)givenCard);
-		break;
-	default:
-		cout << "ActivateCard: Unknown Card.";
-		break;
-	}
 }
 
 CCore::~CCore()
@@ -202,4 +191,19 @@ bool CCore::GameRunning()
 		return false;
 
 	return true;
+}
+
+CPlayer* CCore::GetPlayer(EPlayer player)
+{
+	switch (player)
+	{
+	case sorceress:
+		return pSorceress;
+		break;
+	case wizard:
+		return pWizard;
+		break;
+	}
+		
+	return nullptr;
 }
