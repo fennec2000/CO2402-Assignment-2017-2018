@@ -45,6 +45,12 @@
     <ClInclude Include="CDamageable.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="CFireBall.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="CLighting.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -69,6 +75,12 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="CDamageable.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="CFireBall.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="CLighting.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

@@ -146,6 +146,8 @@
     <ClInclude Include="CCore.h" />
     <ClInclude Include="CDamageable.h" />
     <ClInclude Include="CField.h" />
+    <ClInclude Include="CFireBall.h" />
+    <ClInclude Include="CLighting.h" />
     <ClInclude Include="CMinion.h" />
     <ClInclude Include="CPlayer.h" />
     <ClInclude Include="FirebrickMath.h" />
@@ -157,6 +159,8 @@
     <ClCompile Include="CCore.cpp" />
     <ClCompile Include="CDamageable.cpp" />
     <ClCompile Include="CField.cpp" />
+    <ClCompile Include="CFireBall.cpp" />
+    <ClCompile Include="CLighting.cpp" />
     <ClCompile Include="CMinion.cpp" />
     <ClCompile Include="CPlayer.cpp" />
     <ClCompile Include="Firebrick.cpp" />

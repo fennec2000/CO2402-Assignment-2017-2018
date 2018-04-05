@@ -1,11 +1,11 @@
 #include "CMinion.h"
 
 
-CMinion::CMinion(string givenName, int givenAttack, int givenHealth, EPlayer myPlayer, CPlayer* enemy, vector<CMinion*>* enemyField)
+CMinion::CMinion(string givenName, int givenAttack, int givenHealth, EPlayer myPlayer, CPlayer* enemy, vector<CDamageable*>* enemyField)
 {
 	name = givenName;
-	attack = givenAttack;
-	SetHealth(givenHealth);
+	damage = givenAttack;
+	health = givenHealth;
 	player = myPlayer;
 	type = ECardType::Minion;
 	pEnemyPlayer = enemy;
@@ -16,17 +16,18 @@ CMinion::~CMinion()
 {
 }
 
-void CMinion::Attack()
+CDamageable* CMinion::Attack()
 {
-	pEnemyPlayer->TakeDamage(this, attack);
-}
-
-void CMinion::TakeDamage(CMinion * attacker, int damage)
-{
-	cout << "**TODO**: void CMinion::TakeDamage(CMinion * attacker, int damage)" << endl;
-}
-
-void CMinion::TakeDamage(CPlayer * attacker, int damage)
-{
-	cout << "**TODO**: void CMinion::TakeDamage(CPlayer * attacker, int damage)" << endl;
+	int enemySize = pEnemyField->size();
+	if (enemySize > 0) // attack minion
+	{
+		int randPick = Random(enemySize - 1);
+		pEnemyField->at(randPick)->TakeDamage(this, damage);
+		return pEnemyField->at(randPick);
+	}
+	else // attack player
+	{
+		pEnemyPlayer->TakeDamage(this, damage);
+		return pEnemyPlayer;
+	}
 }

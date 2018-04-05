@@ -1,22 +1,18 @@
 #pragma once
-#include "CCard.h"
-#include "CDamageable.h"
 #include "CPlayer.h"
 #include <vector>
 
-class CMinion : public CCard, public CDamageable
+class CPlayer;
+
+class CMinion : public CDamageable
 {
 private:
-	int attack;
 	CPlayer* pEnemyPlayer;
-	vector<CMinion*>* pEnemyField;
+	vector<CDamageable*>* pEnemyField;
 protected:
 public:
-	CMinion(string givenName, int givenAttack, int givenHealth, EPlayer myPlayer, CPlayer* enemy, vector<CMinion*>* enemyField);
+	CMinion(string givenName, int givenAttack, int givenHealth, EPlayer myPlayer, CPlayer* enemy, vector<CDamageable*>* enemyField);
 	~CMinion();
-	void Attack();
-	int GetAttack() { return attack; };
-	void TakeDamage(CMinion* attacker, int damage);
-	void TakeDamage(CPlayer* attacker, int damage);
+	CDamageable* CMinion::Attack();
 };
 

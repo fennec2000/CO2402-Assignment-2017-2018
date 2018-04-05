@@ -49,6 +49,8 @@ CCore::CCore()
 /// <param name="inputFile">name of the file which contains the deck of cards</param>
 void CCore::LoadDeck(EPlayer givenPlayer, string inputFile)
 {
+	EPlayer enemy = ((givenPlayer) ? sorceress : wizard);
+	CPlayer* pEnemyPlayer = ((givenPlayer) ? pSorceress : pWizard);
 
 	string line;
 	string section;
@@ -70,15 +72,26 @@ void CCore::LoadDeck(EPlayer givenPlayer, string inputFile)
 					i++;
 				}
 			}
-			CCard* card;
-			switch (stoi(arr[0]))
+			if (stoi(arr[0]) == Minion)
 			{
-			case 1:
-				card = new CMinion(arr[1], stoi(arr[2]), stoi(arr[3]), givenPlayer, ((givenPlayer) ? pWizard : pSorceress), pField->GetField(givenPlayer));
+				CCard* card;
+				CMinion* newCard = new CMinion(arr[1], stoi(arr[2]), stoi(arr[3]), givenPlayer, pEnemyPlayer, pField->GetField(enemy));
+				card = (CCard*)newCard;
 				pField->AddCardToDeck(givenPlayer, card);
-				break;
-			default:
-				break;
+			}
+			else if (stoi(arr[0]) == Fireball)
+			{
+				CCard* card;
+				CFireBall* newCard = new CFireBall(pEnemyPlayer, pField->GetField(enemy));
+				card = (CCard*)newCard;
+				pField->AddCardToDeck(givenPlayer, card);
+			}
+			else if (stoi(arr[0]) == Lighting)
+			{
+				CCard* card;
+				CLighting* newCard = new CLighting(pEnemyPlayer, pField->GetField(enemy));
+				card = (CCard*)newCard;
+				pField->AddCardToDeck(givenPlayer, card);
 			}
 		}
 		myfile.close();
@@ -135,32 +148,83 @@ void CCore::Turn(EPlayer player)
 	// display table
 	pField->DisplayTable(player);
 
+	// Set minions active
+	pField->SetFieldActive(player);
+
 	// attack
-	vector<CMinion*>* playerField = pField->GetField(player);
-	for (vector<CMinion*>::iterator it = playerField->begin(); it != playerField->end(); ++it)
+ 	EPlayer enemy = ((player) ? sorceress : wizard);
+
+	vector<CDamageable*>* playerField = pField->GetField(player);
+	while (pField->ActiveMinions(player) && GameRunning())
 	{
-		if (!GameRunning())
-			break;
-
-		(*it)->Attack();
+		for (int i = 0; i < playerField->size(); i++)
+		{
+			if (playerField->at(i)->GetActiveStatus())
+			{
+				CDamageable* target = playerField->at(i)->Attack();
+				playerField->at(i)->SetActiveStatus(false);
+				if (target->GetHealth() <= 0 && target->GetGraveable())
+				{
+					SendCardToGraveyard(enemy, target);
+					break;
+				}
+			}
+			if (!GameRunning()) // stop if games ends
+				break;
+		}
 	}
-		
-
 	// end
 }
 
 void CCore::ActivateCard(EPlayer player, CCard* givenCard)
 {
 	cout << ((player) ? "Wizard" : "Sorceress") << " plays " << givenCard->GetName() << endl;
-	switch (givenCard->GetType())
+	ECardType chosenCardType = givenCard->GetType();
+	if (chosenCardType == Minion)
 	{
-	case Minion:
 		pField->AddCardToField(player, (CMinion*)givenCard);
-		break;
-	default:
-		cout << "ActivateCard: Unknown Card.";
-		break;
 	}
+	else if (chosenCardType == Fireball)
+	{
+		CDamageable* target = static_cast<CFireBall*>(givenCard)->Attack();
+		if (target->GetHealth() <= 0)
+			SendCardToGraveyard(((player) ? sorceress : wizard), target);
+	}
+	else if (chosenCardType == Lighting)
+	{
+		static_cast<CLighting*>(givenCard)->Attack();
+		vector<CDamageable*>* enemies = pField->GetField(((player) ? sorceress : wizard));
+		// pass to see if any are dead
+		bool cleanPass = false;
+		while (!cleanPass)
+		{
+			cleanPass = true;
+			for (int i = 0; i < enemies->size(); i++)
+			{
+				if (enemies->at(i)->GetHealth() <= 0)
+				{
+					SendCardToGraveyard(((player) ? sorceress : wizard), enemies->at(i));
+
+					// reset and recheck
+					cleanPass = false;
+					break; 
+				}
+			}
+		}
+	}
+	else
+	{
+		cout << "ActivateCard: Unknown Card.";
+	}
+}
+
+void CCore::SendCardToGraveyard(EPlayer enemy, CDamageable* target)
+{
+	// remove from field
+	pField->RemoveFromField(enemy, target);
+
+	// add to grave
+	pField->AddCardToGrave(enemy, (CCard*)target);
 }
 
 CCore::~CCore()

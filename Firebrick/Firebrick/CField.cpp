@@ -27,13 +27,13 @@ CField::~CField()
 	// delete field
 	while (!sorceressField.empty())
 	{
-		current = sorceressField.back();
+		current = (CCard*)sorceressField.back();
 		sorceressField.pop_back();
 		delete current;
 	}
 	while (!wizardField.empty())
 	{
-		current = wizardField.back();
+		current = (CCard*)wizardField.back();
 		wizardField.pop_back();
 		delete current;
 	}
@@ -68,7 +68,7 @@ void CField::AddCardToDeck(EPlayer player, CCard* givenCard)
 	}
 }
 
-void CField::AddCardToField(EPlayer player, CMinion* givenCard)
+void CField::AddCardToField(EPlayer player, CDamageable* givenCard)
 {
 	switch (player)
 	{
@@ -136,7 +136,7 @@ void CField::DisplayTable(EPlayer player)
 	cout << endl;
 }
 
-vector<CMinion*>* CField::GetField(EPlayer player)
+vector<CDamageable*>* CField::GetField(EPlayer player)
 {
 	switch (player)
 	{
@@ -150,5 +150,65 @@ vector<CMinion*>* CField::GetField(EPlayer player)
 		break;
 	}
 	return nullptr;
+}
+
+bool CField::ActiveMinions(EPlayer player)
+{
+	switch (player)
+	{
+	case sorceress:
+		for (std::vector<CDamageable*>::iterator it = sorceressField.begin(); it != sorceressField.end(); ++it)
+		{
+			if ((*it)->GetActiveStatus())
+				return true;
+		}
+		break;
+	case wizard:
+		for (std::vector<CDamageable*>::iterator it = wizardField.begin(); it != wizardField.end(); ++it)
+		{
+			if ((*it)->GetActiveStatus())
+				return true;
+		}
+		break;
+	default:
+		break;
+	}
+	return false;
+}
+
+void CField::RemoveFromField(EPlayer player, CDamageable* card)
+{
+	switch (player)
+	{
+	case sorceress:
+		sorceressField.erase(remove(sorceressField.begin(), sorceressField.end(), card), sorceressField.end());
+		break;
+	case wizard:
+		wizardField.erase(remove(wizardField.begin(), wizardField.end(), card), wizardField.end());
+		break;
+	default:
+		break;
+	}
+}
+
+void CField::SetFieldActive(EPlayer player)
+{
+	switch (player)
+	{
+	case sorceress:
+		for (std::vector<CDamageable*>::iterator it = sorceressField.begin(); it != sorceressField.end(); ++it)
+		{
+			(*it)->SetActiveStatus(true);
+		}
+		break;
+	case wizard:
+		for (std::vector<CDamageable*>::iterator it = wizardField.begin(); it != wizardField.end(); ++it)
+		{
+			(*it)->SetActiveStatus(true);
+		}
+		break;
+	default:
+		break;
+	}
 }
 

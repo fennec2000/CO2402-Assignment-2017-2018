@@ -1,6 +1,4 @@
 #pragma once
-#include "CCard.h"
-#include "CMinion.h"
 #include "CDamageable.h"
 #include "FirebrickMath.h"
 #include <vector>	// vector
@@ -18,8 +16,7 @@ public:
 	~CPlayer();
 	inline void AddCardToHand(CCard* givenCard) { hand.push_back(givenCard); };
 	CCard* PlayCard();
-	void TakeDamage(CMinion* attacker, int damage);
-	void TakeDamage(CPlayer* attacker, int damage);
 	int GetHandSize() { return hand.size(); };
+	CDamageable* Attack() { return nullptr; };
 };
 
