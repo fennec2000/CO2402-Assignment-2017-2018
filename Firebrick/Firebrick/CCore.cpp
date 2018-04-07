@@ -126,6 +126,12 @@ void CCore::LoadDeck(EPlayer givenPlayer, string inputFile)
 				card = static_cast<CCard*>(newCard);
 				pField->AddCardToDeck(givenPlayer, card);
 			}
+			else if (newCardType == Leech)
+			{
+				CLeech* newCard = new CLeech(arr[1], stoi(arr[2]), stoi(arr[3]), givenPlayer, pEnemyPlayer, pField->GetField(enemy), ((givenPlayer) ? pWizard : pSorceress));
+				card = static_cast<CCard*>(newCard);
+				pField->AddCardToDeck(givenPlayer, card);
+			}
 		}
 		myfile.close();
 	}
@@ -211,7 +217,8 @@ void CCore::ActivateCard(EPlayer player, CCard* givenCard)
 {
 	cout << ((player) ? "Wizard" : "Sorceress") << " plays " << givenCard->GetName() << endl;
 	ECardType chosenCardType = givenCard->GetType();
-	if (chosenCardType == Minion || chosenCardType == Vampire || chosenCardType == Wall || chosenCardType == Horde || chosenCardType == Trample) // minions
+	if (chosenCardType == Minion || chosenCardType == Vampire || chosenCardType == Wall ||
+		chosenCardType == Horde || chosenCardType == Trample || chosenCardType == Leech) // minions
 	{
 		pField->AddCardToField(player, static_cast<CMinion*>(givenCard));
 	}

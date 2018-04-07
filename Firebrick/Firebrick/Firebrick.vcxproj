@@ -149,6 +149,7 @@
     <ClInclude Include="CField.h" />
     <ClInclude Include="CFireBall.h" />
     <ClInclude Include="CHorde.h" />
+    <ClInclude Include="CLeech.h" />
     <ClInclude Include="CLighting.h" />
     <ClInclude Include="CMinion.h" />
     <ClInclude Include="CPlayer.h" />
@@ -168,6 +169,7 @@
     <ClCompile Include="CField.cpp" />
     <ClCompile Include="CFireBall.cpp" />
     <ClCompile Include="CHorde.cpp" />
+    <ClCompile Include="CLeech.cpp" />
     <ClCompile Include="CLighting.cpp" />
     <ClCompile Include="CMinion.cpp" />
     <ClCompile Include="CPlayer.cpp" />
