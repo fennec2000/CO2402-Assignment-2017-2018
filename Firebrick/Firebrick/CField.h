@@ -1,5 +1,6 @@
 #pragma once
 #include "CDamageable.h"
+#include "FirebrickMath.h"
 #include <queue>	// queue
 #include <iostream>	// cout
 using namespace std;
@@ -7,12 +8,12 @@ using namespace std;
 class CField
 {
 private:
-	queue<CCard*> sorceressDeck;
-	queue<CCard*> wizardDeck;
+	vector<CCard*> sorceressDeck;
+	vector<CCard*> wizardDeck;
 	vector<CDamageable*> sorceressField;
 	vector<CDamageable*> wizardField;
-	queue<CCard*> sorceressGrave;
-	queue<CCard*> wizardGrave;
+	vector<CCard*> sorceressGrave;
+	vector<CCard*> wizardGrave;
 
 public:
 	CField();
@@ -26,5 +27,6 @@ public:
 	bool ActiveMinions(EPlayer player);
 	void RemoveFromField(EPlayer player, CDamageable* card);
 	void SetFieldActive(EPlayer player);
+	void ShuffleDeck(EPlayer player);
 };
 

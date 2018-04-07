@@ -40,5 +40,6 @@ public:
 	void PlayTurn();
 	int GetRounds() { return round; };
 	bool GameRunning();
+	void ShuffleCardsQuestion();
 };
 

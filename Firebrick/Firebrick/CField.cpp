@@ -13,14 +13,14 @@ CField::~CField()
 	// delete decks
 	while (!sorceressDeck.empty())
 	{
-		current = sorceressDeck.front();
-		sorceressDeck.pop();
+		current = sorceressDeck.back();
+		sorceressDeck.pop_back();
 		delete current;
 	}
 	while (!wizardDeck.empty())
 	{
-		current = wizardDeck.front();
-		wizardDeck.pop();
+		current = wizardDeck.back();
+		wizardDeck.pop_back();
 		delete current;
 	}
 
@@ -41,14 +41,14 @@ CField::~CField()
 	// delette grave
 	while (!sorceressGrave.empty())
 	{
-		current = sorceressGrave.front();
-		sorceressGrave.pop();
+		current = sorceressGrave.back();
+		sorceressGrave.pop_back();
 		delete current;
 	}
 	while (!wizardGrave.empty())
 	{
-		current = wizardGrave.front();
-		wizardGrave.pop();
+		current = wizardGrave.back();
+		wizardGrave.pop_back();
 		delete current;
 	}
 }
@@ -58,10 +58,10 @@ void CField::AddCardToDeck(EPlayer player, CCard* givenCard)
 	switch (player)
 	{
 	case sorceress:
-		sorceressDeck.push(givenCard);
+		sorceressDeck.push_back(givenCard);
 		break;
 	case wizard:
-		wizardDeck.push(givenCard);
+		wizardDeck.push_back(givenCard);
 		break;
 	default:
 		break;
@@ -88,10 +88,10 @@ void CField::AddCardToGrave(EPlayer player, CCard* givenCard)
 	switch (player)
 	{
 	case sorceress:
-		sorceressGrave.push(givenCard);
+		sorceressGrave.push_back(givenCard);
 		break;
 	case wizard:
-		wizardGrave.push(givenCard);
+		wizardGrave.push_back(givenCard);
 		break;
 	default:
 		break;
@@ -104,12 +104,12 @@ CCard* CField::DrawFromDeck(EPlayer player)
 	switch (player)
 	{
 	case sorceress:
-		chosenCard = sorceressDeck.front();
-		sorceressDeck.pop();
+		chosenCard = sorceressDeck.back();
+		sorceressDeck.pop_back();
 		break;
 	case wizard:
-		chosenCard = wizardDeck.front();
-		wizardDeck.pop();
+		chosenCard = wizardDeck.back();
+		wizardDeck.pop_back();
 		break;
 	default:
 		break;
@@ -209,6 +209,16 @@ void CField::SetFieldActive(EPlayer player)
 		break;
 	default:
 		break;
+	}
+}
+
+void CField::ShuffleDeck(EPlayer player)
+{
+	vector<CCard*>* playerDeck = ((player) ? &wizardDeck : &sorceressDeck);
+
+	for (int i = 0; i < playerDeck->size(); i++)
+	{
+		swap(playerDeck->at(i), playerDeck->at(Random(playerDeck->size())));
 	}
 }
 

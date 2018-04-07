@@ -36,6 +36,7 @@ CCore::CCore()
 
 	// setup players
 	LoadCards();
+	ShuffleCardsQuestion();
 	Draw(EPlayer::sorceress);
 	Draw(EPlayer::wizard);
 	round++;
@@ -288,4 +289,36 @@ bool CCore::GameRunning()
 		return false;
 
 	return true;
+}
+
+void CCore::ShuffleCardsQuestion()
+{
+	string input;
+	bool ans = false;
+
+	while (true)
+	{
+		cout << "Would you like to shuffle the decks? (yes or no)" << endl;
+		getline(cin, input);
+		transform(input.begin(), input.end(), input.begin(), ::tolower);
+
+		if ("yes" == input || "y" == input)
+		{
+			ans = true;
+			break;
+		}
+		else if ("no" == input || "n" == input)
+		{
+			ans = false;
+			break;
+		}
+		cout << "Please only answer with 'yes' or 'no'" << endl;
+	}
+
+	if (ans)
+	{
+		pField->ShuffleDeck(sorceress);
+		pField->ShuffleDeck(wizard);
+		cout << "Decks shuffled" << endl;
+	}
 }
