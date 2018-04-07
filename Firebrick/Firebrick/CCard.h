@@ -18,5 +18,6 @@ public:
 	virtual ~CCard();
 	ECardType GetType() { return type; };
 	string GetName() { return name; };
+	EPlayer GetPlayer() { return player; };
 };
 

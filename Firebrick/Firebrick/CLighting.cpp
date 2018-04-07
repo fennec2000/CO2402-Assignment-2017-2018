@@ -2,10 +2,10 @@
 
 
 
-CLighting::CLighting(CPlayer* enemy, vector<CDamageable*>* enemyField)
+CLighting::CLighting(string givenName, int givenDamage, CPlayer* enemy, vector<CDamageable*>* enemyField)
 {
-	name = "Lighting";
-	damage = 1;
+	name = givenName;
+	damage = givenDamage;
 	health = -1;
 	type = ECardType::Lighting;
 	pEnemyPlayer = enemy;

@@ -2,10 +2,10 @@
 
 
 
-CFireBall::CFireBall(CPlayer* enemy, vector<CDamageable*>* enemyField)
+CFireBall::CFireBall(string givenName, int givenDamage, CPlayer* enemy, vector<CDamageable*>* enemyField)
 {
-	name = "Fireball";
-	damage = 3;
+	name = givenName;
+	damage = givenDamage;
 	health = -1;
 	type = ECardType::Fireball;
 	pEnemyPlayer = enemy;

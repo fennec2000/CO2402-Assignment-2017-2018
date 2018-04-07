@@ -82,14 +82,28 @@ void CCore::LoadDeck(EPlayer givenPlayer, string inputFile)
 			else if (stoi(arr[0]) == Fireball)
 			{
 				CCard* card;
-				CFireBall* newCard = new CFireBall(pEnemyPlayer, pField->GetField(enemy));
+				CFireBall* newCard = new CFireBall(arr[1], stoi(arr[2]), pEnemyPlayer, pField->GetField(enemy));
 				card = (CCard*)newCard;
 				pField->AddCardToDeck(givenPlayer, card);
 			}
 			else if (stoi(arr[0]) == Lighting)
 			{
 				CCard* card;
-				CLighting* newCard = new CLighting(pEnemyPlayer, pField->GetField(enemy));
+				CLighting* newCard = new CLighting(arr[1], stoi(arr[2]), pEnemyPlayer, pField->GetField(enemy));
+				card = (CCard*)newCard;
+				pField->AddCardToDeck(givenPlayer, card);
+			}
+			else if (stoi(arr[0]) == Bless)
+			{
+				CCard* card;
+				CBless* newCard = new CBless(arr[1], stoi(arr[2]), stoi(arr[3]), pEnemyPlayer, ((givenPlayer) ? pWizard : pSorceress), pField->GetField(enemy), pField->GetField(givenPlayer));
+				card = (CCard*)newCard;
+				pField->AddCardToDeck(givenPlayer, card);
+			}
+			else if (stoi(arr[0]) == Vampire)
+			{
+				CCard* card;
+				CVampire* newCard = new CVampire(arr[1], stoi(arr[2]), stoi(arr[3]), stoi(arr[4]), givenPlayer, pEnemyPlayer, pField->GetField(enemy));
 				card = (CCard*)newCard;
 				pField->AddCardToDeck(givenPlayer, card);
 			}
@@ -152,8 +166,6 @@ void CCore::Turn(EPlayer player)
 	pField->SetFieldActive(player);
 
 	// attack
- 	EPlayer enemy = ((player) ? sorceress : wizard);
-
 	vector<CDamageable*>* playerField = pField->GetField(player);
 	while (pField->ActiveMinions(player) && GameRunning())
 	{
@@ -165,7 +177,7 @@ void CCore::Turn(EPlayer player)
 				playerField->at(i)->SetActiveStatus(false);
 				if (target->GetHealth() <= 0 && target->GetGraveable())
 				{
-					SendCardToGraveyard(enemy, target);
+					SendCardToGraveyard(target);
 					break;
 				}
 			}
@@ -188,7 +200,7 @@ void CCore::ActivateCard(EPlayer player, CCard* givenCard)
 	{
 		CDamageable* target = static_cast<CFireBall*>(givenCard)->Attack();
 		if (target->GetHealth() <= 0)
-			SendCardToGraveyard(((player) ? sorceress : wizard), target);
+			SendCardToGraveyard(target);
 	}
 	else if (chosenCardType == Lighting)
 	{
@@ -203,7 +215,7 @@ void CCore::ActivateCard(EPlayer player, CCard* givenCard)
 			{
 				if (enemies->at(i)->GetHealth() <= 0)
 				{
-					SendCardToGraveyard(((player) ? sorceress : wizard), enemies->at(i));
+					SendCardToGraveyard(enemies->at(i));
 
 					// reset and recheck
 					cleanPass = false;
@@ -212,19 +224,29 @@ void CCore::ActivateCard(EPlayer player, CCard* givenCard)
 			}
 		}
 	}
+	else if (chosenCardType == Bless)
+	{
+		CDamageable* target = static_cast<CBless*>(givenCard)->Attack();
+		if (target->GetHealth() <= 0)
+			SendCardToGraveyard(target);
+	}
+	else if (chosenCardType == Vampire)
+	{
+		pField->AddCardToField(player, (CMinion*)givenCard);
+	}
 	else
 	{
 		cout << "ActivateCard: Unknown Card.";
 	}
 }
 
-void CCore::SendCardToGraveyard(EPlayer enemy, CDamageable* target)
+void CCore::SendCardToGraveyard(CDamageable* target)
 {
 	// remove from field
-	pField->RemoveFromField(enemy, target);
+	pField->RemoveFromField(target->GetPlayer(), target);
 
 	// add to grave
-	pField->AddCardToGrave(enemy, (CCard*)target);
+	pField->AddCardToGrave(target->GetPlayer(), (CCard*)target);
 }
 
 CCore::~CCore()

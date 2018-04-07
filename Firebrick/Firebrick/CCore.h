@@ -1,5 +1,7 @@
 #pragma once
 #include "CPlayer.h"
+#include "CVampire.h"
+#include "CBless.h"
 #include "CLighting.h"
 #include "CFireBall.h"
 #include "CMinion.h"
@@ -28,7 +30,7 @@ private:
 	void Draw(EPlayer player);
 	void Turn(EPlayer player);
 	void ActivateCard(EPlayer player, CCard* givenCard);
-	void SendCardToGraveyard(EPlayer enemy, CDamageable* target);
+	void SendCardToGraveyard(CDamageable* target);
 public:
 	//Static access method.
 	static CCore* GetInstance();

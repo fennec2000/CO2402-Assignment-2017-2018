@@ -9,7 +9,7 @@ private:
 	CPlayer* pEnemyPlayer;
 	vector<CDamageable*>* pEnemyField;
 public:
-	CLighting(CPlayer* enemy, vector<CDamageable*>* enemyField);
+	CLighting(string givenName, int givenDamage, CPlayer* enemy, vector<CDamageable*>* enemyField);
 	virtual ~CLighting();
 	CDamageable* Attack();
 };

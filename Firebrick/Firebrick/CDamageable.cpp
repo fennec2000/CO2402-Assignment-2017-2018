@@ -15,7 +15,7 @@ int CDamageable::TakeDamage(CDamageable* attacker, int damage)
 	health -= damage;
 	// report
 	if (health > 0)
-		cout << attacker->GetName() << " attacks " << name << ": " << name << " health now " << health << endl;
+		cout << attacker->GetName() << ((damage >= 0) ? " attacks " : " heals ") << name << ": " << name << " health now " << health << endl;
 	else
 		cout << attacker->GetName() << " attacks " << name << ": " << name << " killed " << endl;
 

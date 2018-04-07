@@ -8,7 +8,7 @@ private:
 	CPlayer* pEnemyPlayer;
 	vector<CDamageable*>* pEnemyField;
 public:
-	CFireBall(CPlayer* enemy, vector<CDamageable*>* enemyField);
+	CFireBall(string givenName, int givenDamage, CPlayer* enemy, vector<CDamageable*>* enemyField);
 	virtual ~CFireBall();
 	CDamageable* Attack();
 };

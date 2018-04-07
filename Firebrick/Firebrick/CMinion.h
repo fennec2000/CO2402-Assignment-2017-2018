@@ -7,10 +7,12 @@ class CPlayer;
 class CMinion : public CDamageable
 {
 private:
-	CPlayer* pEnemyPlayer;
-	vector<CDamageable*>* pEnemyField;
+	
 protected:
+	CPlayer * pEnemyPlayer;
+	vector<CDamageable*>* pEnemyField;
 public:
+	inline CMinion() {};
 	CMinion(string givenName, int givenAttack, int givenHealth, EPlayer myPlayer, CPlayer* enemy, vector<CDamageable*>* enemyField);
 	~CMinion();
 	CDamageable* CMinion::Attack();
