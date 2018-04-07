@@ -11,10 +11,10 @@
 #include "CLighting.h"
 #include "CFireBall.h"
 #include "CField.h"
-#include <string> // string
-#include <iostream> // cout
-#include <fstream> // ifstream
-#include <sstream>
+#include <string>	// string
+#include <iostream>	// cout
+#include <fstream>	// ifstream
+#include <sstream>	// istringstream
 using namespace std;
 
 // CCore the core to the application, this is a singleton class
@@ -40,7 +40,6 @@ public:
 	//Static access method.
 	static CCore* GetInstance();
 	~CCore();
-
 	void LoadCards();
 	void PlayTurn();
 	int GetRounds() { return round; };

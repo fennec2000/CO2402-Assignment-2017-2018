@@ -3,21 +3,28 @@
 #include "FirebrickMath.h"
 #include <iostream>
 
+/// <summary>
+/// report back from an attack
+/// used to report a list of killed enemies
+/// left for expansion
+/// was used for reporting mulitple events
+/// reduced to reporting only a list
+/// TODO: change just to a vector
+/// </summary>
 struct SAttackReport
 {
 	vector<CCard*> killList;
-	int trampleDamage;
 };
 
 class CDamageable : public CCard
 {
 protected:
-	int health;
-	int damage;
-	int defence = 0;
-	bool active = false;
-	bool graveable = true;
-	SAttackReport currentAttackReport;
+	int health;				// health of the card
+	int damage;				// damage of the card
+	int defence = 0;		// defence of the card or 'amour' default: 0
+	bool active = false;	// active, has the card hads taken its turn this turn
+	bool graveable = true;	// can this card go to the graveyard
+	SAttackReport currentAttackReport;	// report what was done, this report a vector of cards that have been killed and trample damage if aplicable
 public:
 	CDamageable();
 	virtual ~CDamageable();

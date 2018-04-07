@@ -10,11 +10,12 @@ int main()
 	// Creat core
 	CCore* c = CCore::GetInstance();
 
+	// run the game
 	while (c->GameRunning())
 		c->PlayTurn();
+	delete c; // clean up the game
 
 	system("pause");
-	delete c;
     return 0;
 }
 

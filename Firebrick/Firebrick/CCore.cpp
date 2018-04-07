@@ -3,6 +3,10 @@
 // Setup instance
 CCore* CCore::pInstance = 0;
 
+/// <summary>
+/// Get the single instance of the core component
+/// </summary>
+/// <returns>pointer to the singleton</returns>
 CCore* CCore::GetInstance()
 {
 	if (pInstance == 0)
@@ -13,6 +17,9 @@ CCore* CCore::GetInstance()
 	return pInstance;
 }
 
+/// <summary>
+/// Core, sets up the game
+/// </summary>
 CCore::CCore()
 {
 	// setup srand
@@ -75,6 +82,7 @@ void CCore::LoadDeck(EPlayer givenPlayer, string inputFile)
 				}
 			}
 
+			// create the card and add it to the deck
 			ECardType newCardType = static_cast<ECardType>(stoi(arr[0]));
 			CCard* card;
 
@@ -151,9 +159,14 @@ void CCore::LoadDeck(EPlayer givenPlayer, string inputFile)
 	else
 		cout << "Unable to open file" << endl;
 
+	// flip the deck over so the top of the text file is the top of the deck
 	pField->ReverseDeck(givenPlayer);
 }
 
+/// <summary>
+/// draws a card from that players deck and adds it to there hand
+/// </summary>
+/// <param name="player">play to draw</param>
 void CCore::Draw(EPlayer player)
 {
 	CCard* current;
@@ -177,12 +190,16 @@ void CCore::Draw(EPlayer player)
 	}
 }
 
+/// <summary>
+/// The turn for the given play, will draw, play a card, display the table, set all minions active and finally attack
+/// </summary>
+/// <param name="player">player to take a turn</param>
 void CCore::Turn(EPlayer player)
 {
 	// draw
 	Draw(player);
 
-	// play card in hand
+	// play card from hand
 	CPlayer** currentPlayer;
 	switch (player)
 	{
@@ -225,17 +242,22 @@ void CCore::Turn(EPlayer player)
 	// end
 }
 
+/// <summary>
+/// uses the given card for a player
+/// </summary>
+/// <param name="player">player who used the card</param>
+/// <param name="givenCard">card to be played</param>
 void CCore::ActivateCard(EPlayer player, CCard* givenCard)
 {
 	cout << ((player) ? "Wizard" : "Sorceress") << " plays " << givenCard->GetName() << endl;
 	ECardType chosenCardType = givenCard->GetType();
+
 	if (chosenCardType == Minion || chosenCardType == Vampire || chosenCardType == Wall ||
-		chosenCardType == Horde || chosenCardType == Trample || chosenCardType == Leech) // minions
+		chosenCardType == Horde || chosenCardType == Trample || chosenCardType == Leech) // summon minion
 	{
 		pField->AddCardToField(player, static_cast<CMinion*>(givenCard));
 	}
-	else if (chosenCardType == Fireball || chosenCardType == Bless || chosenCardType == Lighting
-		) // cast spells
+	else if (chosenCardType == Fireball || chosenCardType == Bless || chosenCardType == Lighting) // cast spell
 	{
 		SAttackReport* report = static_cast<CSpell*>(givenCard)->Attack();
 		while (!report->killList.empty())
@@ -254,6 +276,11 @@ void CCore::ActivateCard(EPlayer player, CCard* givenCard)
 	}
 }
 
+/// <summary>
+/// Sends a card from the field to the graveyard
+/// can send non field cards to the graveyard but will still check to see if that card is on the field
+/// </summary>
+/// <param name="target">card to send to the graveyard</param>
 void CCore::SendCardToGraveyard(CDamageable* target)
 {
 	// remove from field
@@ -263,6 +290,9 @@ void CCore::SendCardToGraveyard(CDamageable* target)
 	pField->AddCardToGrave(target->GetPlayer(), (CCard*)target);
 }
 
+/// <summary>
+/// clean up the players and field when game is over
+/// </summary>
 CCore::~CCore()
 {
 	// delete in reverse order
@@ -271,12 +301,18 @@ CCore::~CCore()
 	delete pField;
 }
 
+/// <summary>
+/// Sets up both players decks
+/// </summary>
 void CCore::LoadCards()
 {
 	LoadDeck(EPlayer::sorceress, "sorceress.txt");
 	LoadDeck(EPlayer::wizard, "wizard.txt");
 }
 
+/// <summary>
+/// plays a full round of both players
+/// </summary>
 void CCore::PlayTurn()
 {
 	cout << "Round " << round << endl;
@@ -292,6 +328,10 @@ void CCore::PlayTurn()
 	round++;
 }
 
+/// <summary>
+/// check to see if game should keep running
+/// </summary>
+/// <returns>is the game over false = game over</returns>
 bool CCore::GameRunning()
 {
 	if (round > 30)
@@ -304,6 +344,9 @@ bool CCore::GameRunning()
 	return true;
 }
 
+/// <summary>
+/// ask if the player wants to shuffle the deck and then call if shuffle if so
+/// </summary>
 void CCore::ShuffleCardsQuestion()
 {
 	string input;

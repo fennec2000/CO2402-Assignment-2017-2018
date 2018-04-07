@@ -6,7 +6,9 @@ CField::CField()
 {
 }
 
-
+/// <summary>
+/// removes cards from the decks, field and graveyards
+/// </summary>
 CField::~CField()
 {
 	CCard* current;
@@ -53,6 +55,11 @@ CField::~CField()
 	}
 }
 
+/// <summary>
+/// adds given card to the players deck
+/// </summary>
+/// <param name="player">player the card belongs to</param>
+/// <param name="givenCard">the card being moved</param>
 void CField::AddCardToDeck(EPlayer player, CCard* givenCard)
 {
 	switch (player)
@@ -68,6 +75,11 @@ void CField::AddCardToDeck(EPlayer player, CCard* givenCard)
 	}
 }
 
+/// <summary>
+/// adds a card to the field
+/// </summary>
+/// <param name="player">player the card belongs to</param>
+/// <param name="givenCard">the card being moved</param>
 void CField::AddCardToField(EPlayer player, CDamageable* givenCard)
 {
 	switch (player)
@@ -83,6 +95,11 @@ void CField::AddCardToField(EPlayer player, CDamageable* givenCard)
 	}
 }
 
+/// <summary>
+/// adds a card to the graveyard
+/// </summary>
+/// <param name="player">player the card belongs to</param>
+/// <param name="givenCard">the card being moved</param>
 void CField::AddCardToGrave(EPlayer player, CCard* givenCard)
 {
 	switch (player)
@@ -98,6 +115,11 @@ void CField::AddCardToGrave(EPlayer player, CCard* givenCard)
 	}
 }
 
+/// <summary>
+/// Draw card from players deck
+/// </summary>
+/// <param name="player">player that wants to draw</param>
+/// <returns>the drawn card</returns>
 CCard* CField::DrawFromDeck(EPlayer player)
 {
 	CCard* chosenCard;
@@ -117,6 +139,10 @@ CCard* CField::DrawFromDeck(EPlayer player)
 	return chosenCard;
 }
 
+/// <summary>
+/// displays all cards on the the players field
+/// </summary>
+/// <param name="player">player to show</param>
 void CField::DisplayTable(EPlayer player)
 {
 	cout << "Cards on table: ";
@@ -136,6 +162,11 @@ void CField::DisplayTable(EPlayer player)
 	cout << endl;
 }
 
+/// <summary>
+/// gives a pointer to a players field
+/// </summary>
+/// <param name="player">chosen plaeyr</param>
+/// <returns>a pointer to the players field</returns>
 vector<CDamageable*>* CField::GetField(EPlayer player)
 {
 	switch (player)
@@ -152,6 +183,11 @@ vector<CDamageable*>* CField::GetField(EPlayer player)
 	return nullptr;
 }
 
+/// <summary>
+/// reports if there are any active minions on the field
+/// </summary>
+/// <param name="player">players field to check</param>
+/// <returns>returns true if any minion is active</returns>
 bool CField::ActiveMinions(EPlayer player)
 {
 	switch (player)
@@ -176,6 +212,11 @@ bool CField::ActiveMinions(EPlayer player)
 	return false;
 }
 
+/// <summary>
+/// finds and removes a card form the players field
+/// </summary>
+/// <param name="player">player to seach</param>
+/// <param name="card">card to remove from field</param>
 void CField::RemoveFromField(EPlayer player, CDamageable* card)
 {
 	switch (player)
@@ -205,6 +246,10 @@ void CField::RemoveFromField(EPlayer player, CDamageable* card)
 	}
 }
 
+/// <summary>
+/// Sets all the minions on the player side to active
+/// </summary>
+/// <param name="player">player that wants to have its field all activated</param>
 void CField::SetFieldActive(EPlayer player)
 {
 	switch (player)
@@ -226,6 +271,10 @@ void CField::SetFieldActive(EPlayer player)
 	}
 }
 
+/// <summary>
+/// passes thought the deck and swaps cards randomly from srand
+/// </summary>
+/// <param name="player">players deck to shuffle</param>
 void CField::ShuffleDeck(EPlayer player)
 {
 	vector<CCard*>* playerDeck = ((player) ? &wizardDeck : &sorceressDeck);
@@ -236,6 +285,10 @@ void CField::ShuffleDeck(EPlayer player)
 	}
 }
 
+/// <summary>
+/// flip the order of the deck
+/// </summary>
+/// <param name="player">player deck to flip</param>
 void CField::ReverseDeck(EPlayer player)
 {
 	switch (player)

@@ -7,12 +7,10 @@ enum EPlayer { sorceress, wizard };
 
 class CCard
 {
-private:
 protected:
-	ECardType type;
-	int cost;
-	string name;
-	EPlayer player;
+	ECardType type;	// card type of the card
+	string name;	// name of the card
+	EPlayer player;	// player that the card belongs to enum
 public:
 	CCard();
 	virtual ~CCard();

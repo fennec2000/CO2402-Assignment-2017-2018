@@ -1,7 +1,7 @@
 #include "CHorde.h"
 
 
-
+// constructor
 CHorde::CHorde(string givenName, int givenAttack, int givenHealth, EPlayer myPlayer, CPlayer* enemy, vector<CDamageable*>* enemyField, vector<CDamageable*>* allyField)
 {
 	name = givenName;
@@ -19,6 +19,10 @@ CHorde::~CHorde()
 {
 }
 
+/// <summary>
+/// counts the number of horde and gets attack tthen attacks
+/// </summary>
+/// <returns>report</returns>
 SAttackReport* CHorde::Attack()
 {
 	// horde count

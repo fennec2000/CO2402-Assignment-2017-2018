@@ -1,7 +1,7 @@
 #include "CFireBall.h"
 
 
-
+// constructor
 CFireBall::CFireBall(string givenName, int givenDamage, CPlayer* enemy, vector<CDamageable*>* enemyField)
 {
 	name = givenName;
@@ -17,6 +17,10 @@ CFireBall::~CFireBall()
 {
 }
 
+/// <summary>
+/// picks target and deals damage
+/// </summary>
+/// <returns>report of killed</returns>
 SAttackReport* CFireBall::Attack()
 {
 	int enemySize = pEnemyField->size();
@@ -31,8 +35,8 @@ SAttackReport* CFireBall::Attack()
 	{
 		pEnemyField->at(randPick)->TakeDamage(this, damage);
 
-		if (pEnemyField->at(randPick)->GetHealth() <= 0)
-			currentAttackReport.killList.push_back(pEnemyField->at(randPick));
+		if (pEnemyField->at(randPick)->GetHealth() <= 0) // is dead
+			currentAttackReport.killList.push_back(pEnemyField->at(randPick));	// add to report
 
 		return &currentAttackReport;
 	}

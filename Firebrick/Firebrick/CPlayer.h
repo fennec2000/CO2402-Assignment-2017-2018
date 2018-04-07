@@ -7,7 +7,7 @@ using namespace std;
 class CPlayer : public CDamageable
 {
 private:
-	vector<CCard*> hand;
+	vector<CCard*> hand;	// players hand of card
 	EPlayer player;
 
 	CCard* PlayCard(int cardIndex);

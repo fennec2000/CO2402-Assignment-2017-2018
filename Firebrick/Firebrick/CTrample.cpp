@@ -1,7 +1,7 @@
 #include "CTrample.h"
 
 
-
+// constructor
 CTrample::CTrample(string givenName, int givenAttack, int givenHealth, EPlayer myPlayer, CPlayer* enemy, vector<CDamageable*>* enemyField)
 {
 	name = givenName;
@@ -18,19 +18,27 @@ CTrample::~CTrample()
 {
 }
 
+/// <summary>
+/// attacks
+/// loops through till all damage is delt
+/// </summary>
+/// <returns>report</returns>
 SAttackReport* CTrample::Attack()
 {
 	int damageLeft = damage;
 
-	do
+	do // untill all damage is delt
 	{
-		CDamageable* target = PickTarget();
-		int damageDelt = target->GetHealth();
-		target->TakeDamage(this, damage);
-		if (target->GetHealth() <= 0)
-			currentAttackReport.killList.push_back(target);
-		damageLeft -= damageDelt;
-	} while (damageLeft > 0 && pEnemyPlayer->GetHealth() > 0);
+		CDamageable* target = PickTarget(); // get target
+		int damageDelt = target->GetHealth(); // get its health
+
+		target->TakeDamage(this, damage); // attack
+		if (target->GetHealth() <= 0) // check to see if killed
+			currentAttackReport.killList.push_back(target); // add to report
+
+		damageLeft -= damageDelt; // solves remaining damage
+	} while (damageLeft > 0 && pEnemyPlayer->GetHealth() > 0);	// while there is still damage and
+																// check to see if it won the game
 
 	return &currentAttackReport;
 }

@@ -6,8 +6,6 @@ class CPlayer;
 
 class CMinion : public CDamageable
 {
-private:
-	
 protected:
 	CPlayer* pEnemyPlayer;
 	vector<CDamageable*>* pEnemyField;

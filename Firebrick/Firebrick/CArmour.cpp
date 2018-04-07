@@ -1,7 +1,7 @@
 #include "CArmour.h"
 
 
-
+// constructor
 CArmour::CArmour(string givenName, int givenDamage, CPlayer* player, vector<CDamageable*>* playerField)
 {
 	name = givenName;
@@ -17,6 +17,10 @@ CArmour::~CArmour()
 {
 }
 
+/// <summary>
+/// picks target and applies amour or heals if on player
+/// </summary>
+/// <returns>report</returns>
 SAttackReport* CArmour::Attack()
 {
 	int fieldSize = pField->size();

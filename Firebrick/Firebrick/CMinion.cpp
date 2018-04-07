@@ -1,6 +1,12 @@
 #include "CMinion.h"
 
-
+/// <summary>
+/// picks a target from the enemy field
+/// walls are chosen first
+/// minions are chosen second
+/// if nothing attack enemy player
+/// </summary>
+/// <returns>pointer to chosen target</returns>
 CDamageable* CMinion::PickTarget()
 {
 	int enemySize = pEnemyField->size();

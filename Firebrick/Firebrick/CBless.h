@@ -5,7 +5,7 @@
 class CBless : public CSpell
 {
 private:
-	int heal;
+	int heal;	// amour the card can heal a minion or player
 	CPlayer* pPlayer;
 	vector<CDamageable*>* pField;
 public:

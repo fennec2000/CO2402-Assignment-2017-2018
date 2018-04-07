@@ -1,7 +1,7 @@
 #include "CBless.h"
 
 
-
+// constructor
 CBless::CBless(string givenName, int givenDamage, int givenHeal, CPlayer* enemy, CPlayer* player, vector<CDamageable*>* enemyField, vector<CDamageable*>* playerField)
 {
 	name = givenName;
@@ -20,6 +20,10 @@ CBless::~CBless()
 {
 }
 
+/// <summary>
+/// hurts a single enemy or heals a single ally
+/// </summary>
+/// <returns>report</returns>
 SAttackReport* CBless::Attack()
 {
 	int enemySize = pEnemyField->size(); // enemy minions + enemy player
