@@ -2,7 +2,7 @@
 #include <string> // string
 using namespace std;
 
-enum ECardType { Minion = 1, Fireball, Lighting, Bless, Vampire, Wall, Trample, Leech, Sword, Amour };
+enum ECardType { Minion = 1, Fireball, Lighting, Bless, Vampire, Wall, Horde, Trample, Leech, Sword, Amour };
 enum EPlayer { sorceress, wizard };
 
 class CCard

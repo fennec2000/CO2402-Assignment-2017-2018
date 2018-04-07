@@ -22,6 +22,5 @@ CVampire::~CVampire()
 CDamageable* CVampire::Attack()
 {
 	CDamageable* target = CMinion::Attack();
-	TakeDamage(this, -lifesteal);
 	return target;
 }

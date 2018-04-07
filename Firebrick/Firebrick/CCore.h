@@ -1,5 +1,6 @@
 #pragma once
 #include "CPlayer.h"
+#include "CHorde.h"
 #include "CWall.h"
 #include "CVampire.h"
 #include "CBless.h"

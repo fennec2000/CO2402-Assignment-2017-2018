@@ -63,6 +63,9 @@
     <ClInclude Include="CSpell.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="CHorde.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -105,6 +108,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="CSpell.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="CHorde.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

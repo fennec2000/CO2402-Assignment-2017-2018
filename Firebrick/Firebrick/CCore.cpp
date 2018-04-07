@@ -113,6 +113,12 @@ void CCore::LoadDeck(EPlayer givenPlayer, string inputFile)
 				card = static_cast<CCard*>(newCard);
 				pField->AddCardToDeck(givenPlayer, card);
 			}
+			else if (newCardType == Horde)
+			{
+				CHorde* newCard = new CHorde(arr[1], stoi(arr[2]), stoi(arr[3]), givenPlayer, pEnemyPlayer, pField->GetField(enemy), pField->GetField(givenPlayer));
+				card = static_cast<CCard*>(newCard);
+				pField->AddCardToDeck(givenPlayer, card);
+			}
 		}
 		myfile.close();
 	}
@@ -200,11 +206,11 @@ void CCore::ActivateCard(EPlayer player, CCard* givenCard)
 {
 	cout << ((player) ? "Wizard" : "Sorceress") << " plays " << givenCard->GetName() << endl;
 	ECardType chosenCardType = givenCard->GetType();
-	if (chosenCardType == Minion || chosenCardType == Vampire || chosenCardType == Wall)
+	if (chosenCardType == Minion || chosenCardType == Vampire || chosenCardType == Wall || chosenCardType == Horde) // minions
 	{
 		pField->AddCardToField(player, static_cast<CMinion*>(givenCard));
 	}
-	else if (chosenCardType == Fireball || chosenCardType == Bless)
+	else if (chosenCardType == Fireball || chosenCardType == Bless) // single cast spells
 	{
 		CDamageable* target = static_cast<CSpell*>(givenCard)->Attack();
 		if (target->GetHealth() <= 0)
