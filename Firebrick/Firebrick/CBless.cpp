@@ -20,7 +20,7 @@ CBless::~CBless()
 {
 }
 
-CDamageable* CBless::Attack()
+SAttackReport* CBless::Attack()
 {
 	int enemySize = pEnemyField->size(); // enemy minions + enemy player
 	int pickSize = enemySize + pField->size() + 1; // fiendly minions + player
@@ -38,22 +38,24 @@ CDamageable* CBless::Attack()
 	if (randPick == pickSize) // heal player
 	{
 		pPlayer->TakeDamage(this, -damage);
-		return pPlayer;
+		return &currentAttackReport;
 	}
 	else if (randPick > enemySize) // heal minion
 	{
 		int target = randPick - enemySize - 1; // -1 to get back to start at 0
 		pField->at(target)->TakeDamage(this, -damage);
-		return pField->at(target);
+		return &currentAttackReport;
 	}
 	else if (randPick == enemySize) // attack player
 	{
 		pEnemyPlayer->TakeDamage(this, damage);
-		return pEnemyPlayer;
+		return &currentAttackReport;
 	}
 	else // attack minion
 	{
 		pEnemyField->at(randPick)->TakeDamage(this, damage);
-		return pEnemyField->at(randPick);
+		if (pEnemyField->at(randPick)->GetHealth() <= 0)
+			currentAttackReport.killList.push_back(pEnemyField->at(randPick));
+		return &currentAttackReport;
 	}
 }

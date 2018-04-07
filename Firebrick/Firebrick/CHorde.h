@@ -8,6 +8,6 @@ private:
 public:
 	CHorde(string givenName, int givenAttack, int givenHealth, EPlayer myPlayer, CPlayer* enemy, vector<CDamageable*>* enemyField, vector<CDamageable*>* allyField);
 	virtual ~CHorde();
-	CDamageable* Attack();
+	SAttackReport* Attack();
 };
 

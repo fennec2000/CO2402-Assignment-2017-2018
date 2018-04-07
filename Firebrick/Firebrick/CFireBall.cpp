@@ -17,7 +17,7 @@ CFireBall::~CFireBall()
 {
 }
 
-CDamageable* CFireBall::Attack()
+SAttackReport* CFireBall::Attack()
 {
 	int enemySize = pEnemyField->size();
 	int randPick = Random(enemySize);
@@ -25,11 +25,15 @@ CDamageable* CFireBall::Attack()
 	if (randPick == enemySize) // attack player
 	{
 		pEnemyPlayer->TakeDamage(this, damage);
-		return pEnemyPlayer;
+		return &currentAttackReport;
 	}
 	else // attack minion
 	{
 		pEnemyField->at(randPick)->TakeDamage(this, damage);
-		return pEnemyField->at(randPick);
+
+		if (pEnemyField->at(randPick)->GetHealth() <= 0)
+			currentAttackReport.killList.push_back(pEnemyField->at(randPick));
+
+		return &currentAttackReport;
 	}
 }

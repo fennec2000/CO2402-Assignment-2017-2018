@@ -19,7 +19,7 @@ CHorde::~CHorde()
 {
 }
 
-CDamageable* CHorde::Attack()
+SAttackReport* CHorde::Attack()
 {
 	// horde count
 	int hordeCount = 0;
@@ -37,5 +37,7 @@ CDamageable* CHorde::Attack()
 	// damage
 	CDamageable* target = PickTarget();
 	target->TakeDamage(this, damage * hordeCount);
-	return target;
+	if (target->GetHealth() <= 0)
+		currentAttackReport.killList.push_back(target);
+	return &currentAttackReport;
 }

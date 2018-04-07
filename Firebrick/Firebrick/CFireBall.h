@@ -8,6 +8,6 @@ private:
 public:
 	CFireBall(string givenName, int givenDamage, CPlayer* enemy, vector<CDamageable*>* enemyField);
 	virtual ~CFireBall();
-	CDamageable* Attack();
+	SAttackReport* Attack();
 };
 

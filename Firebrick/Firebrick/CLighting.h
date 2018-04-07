@@ -9,6 +9,6 @@ private:
 public:
 	CLighting(string givenName, int givenDamage, CPlayer* enemy, vector<CDamageable*>* enemyField);
 	virtual ~CLighting();
-	CDamageable* Attack();
+	SAttackReport* Attack();
 };
 

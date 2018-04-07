@@ -19,8 +19,9 @@ CVampire::~CVampire()
 {
 }
 
-CDamageable* CVampire::Attack()
+SAttackReport* CVampire::Attack()
 {
-	CDamageable* target = CMinion::Attack();
-	return target;
+	SAttackReport* report = CMinion::Attack();
+	TakeDamage(this, -lifesteal);
+	return report;
 }

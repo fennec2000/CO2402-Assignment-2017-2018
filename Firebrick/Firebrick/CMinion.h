@@ -9,7 +9,7 @@ class CMinion : public CDamageable
 private:
 	
 protected:
-	CPlayer * pEnemyPlayer;
+	CPlayer* pEnemyPlayer;
 	vector<CDamageable*>* pEnemyField;
 
 	CDamageable* PickTarget();
@@ -17,6 +17,6 @@ public:
 	inline CMinion() {};
 	CMinion(string givenName, int givenAttack, int givenHealth, EPlayer myPlayer, CPlayer* enemy, vector<CDamageable*>* enemyField);
 	~CMinion();
-	CDamageable* Attack();
+	SAttackReport* Attack();
 };
 

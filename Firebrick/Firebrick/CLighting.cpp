@@ -17,12 +17,14 @@ CLighting::~CLighting()
 {
 }
 
-CDamageable* CLighting::Attack()
+SAttackReport* CLighting::Attack()
 {
 	for (int i = 0; i < pEnemyField->size(); i++)
 	{
 		pEnemyField->at(i)->TakeDamage(this, damage);
+		if (pEnemyField->at(i)->GetHealth() <= 0)
+			currentAttackReport.killList.push_back(pEnemyField->at(i));
 	}
 	pEnemyPlayer->TakeDamage(this, damage);
-	return nullptr;
+	return &currentAttackReport;
 }

@@ -8,6 +8,6 @@ private:
 public:
 	CVampire(string givenName, int givenAttack, int givenHealth, int givenLifesteal, EPlayer myPlayer, CPlayer* enemy, vector<CDamageable*>* enemyField);
 	virtual ~CVampire();
-	CDamageable* Attack();
+	SAttackReport* Attack();
 };
 

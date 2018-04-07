@@ -44,9 +44,11 @@ CMinion::~CMinion()
 {
 }
 
-CDamageable* CMinion::Attack()
+SAttackReport* CMinion::Attack()
 {
 	CDamageable* target = PickTarget();
 	target->TakeDamage(this, damage);
-	return target;
+	if (target->GetHealth() <= 0)
+		currentAttackReport.killList.push_back(target);
+	return &currentAttackReport;
 }

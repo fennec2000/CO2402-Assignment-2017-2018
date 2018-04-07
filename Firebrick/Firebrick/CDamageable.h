@@ -3,6 +3,12 @@
 #include "FirebrickMath.h"
 #include <iostream>
 
+struct SAttackReport
+{
+	vector<CCard*> killList;
+	int trampleDamage;
+};
+
 class CDamageable : public CCard
 {
 protected:
@@ -10,6 +16,7 @@ protected:
 	int damage;
 	bool active = false;
 	bool graveable = true;
+	SAttackReport currentAttackReport;
 public:
 	CDamageable();
 	virtual ~CDamageable();
@@ -17,9 +24,8 @@ public:
 	void SetHealth(int hp) { health = hp; };
 	inline int GetHealth() { return health; };
 	inline string GetName() { return name; };
-	virtual CDamageable* Attack() = 0;
+	virtual SAttackReport* Attack() = 0;
 	inline void SetActiveStatus(bool givenStatus) { active = givenStatus; };
 	inline bool GetActiveStatus() { return active; };
 	bool GetGraveable() { return graveable; };
 };
-

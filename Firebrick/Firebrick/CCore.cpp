@@ -23,6 +23,7 @@ CCore::CCore()
 		while (getline(myfile, line))
 		{
 			srand(static_cast<unsigned int>(stoi(line)));
+			//srand(0);
 		}
 		myfile.close();
 	}
@@ -119,6 +120,12 @@ void CCore::LoadDeck(EPlayer givenPlayer, string inputFile)
 				card = static_cast<CCard*>(newCard);
 				pField->AddCardToDeck(givenPlayer, card);
 			}
+			else if (newCardType == Trample)
+			{
+				CTrample* newCard = new CTrample(arr[1], stoi(arr[2]), stoi(arr[3]), givenPlayer, pEnemyPlayer, pField->GetField(enemy));
+				card = static_cast<CCard*>(newCard);
+				pField->AddCardToDeck(givenPlayer, card);
+			}
 		}
 		myfile.close();
 	}
@@ -181,23 +188,21 @@ void CCore::Turn(EPlayer player)
 
 	// attack
 	vector<CDamageable*>* playerField = pField->GetField(player);
-	while (pField->ActiveMinions(player) && GameRunning())
+
+	for (int i = 0; i < playerField->size(); i++)
 	{
-		for (int i = 0; i < playerField->size(); i++)
+		if (playerField->at(i)->GetActiveStatus())
 		{
-			if (playerField->at(i)->GetActiveStatus())
+			SAttackReport* report = playerField->at(i)->Attack();
+			playerField->at(i)->SetActiveStatus(false);
+			while(!report->killList.empty())
 			{
-				CDamageable* target = playerField->at(i)->Attack();
-				playerField->at(i)->SetActiveStatus(false);
-				if (target->GetHealth() <= 0 && target->GetGraveable())
-				{
-					SendCardToGraveyard(target);
-					break;
-				}
+				SendCardToGraveyard(static_cast<CDamageable*>(report->killList.at(0)));
+				report->killList.erase(report->killList.begin());
 			}
-			if (!GameRunning()) // stop if games ends
-				break;
 		}
+		if (!GameRunning()) // stop if games ends
+			break;
 	}
 	// end
 }
@@ -206,36 +211,17 @@ void CCore::ActivateCard(EPlayer player, CCard* givenCard)
 {
 	cout << ((player) ? "Wizard" : "Sorceress") << " plays " << givenCard->GetName() << endl;
 	ECardType chosenCardType = givenCard->GetType();
-	if (chosenCardType == Minion || chosenCardType == Vampire || chosenCardType == Wall || chosenCardType == Horde) // minions
+	if (chosenCardType == Minion || chosenCardType == Vampire || chosenCardType == Wall || chosenCardType == Horde || chosenCardType == Trample) // minions
 	{
 		pField->AddCardToField(player, static_cast<CMinion*>(givenCard));
 	}
-	else if (chosenCardType == Fireball || chosenCardType == Bless) // single cast spells
+	else if (chosenCardType == Fireball || chosenCardType == Bless || chosenCardType == Lighting) // cast spells
 	{
-		CDamageable* target = static_cast<CSpell*>(givenCard)->Attack();
-		if (target->GetHealth() <= 0)
-			SendCardToGraveyard(target);
-	}
-	else if (chosenCardType == Lighting)
-	{
-		static_cast<CLighting*>(givenCard)->Attack();
-		vector<CDamageable*>* enemies = pField->GetField(((player) ? sorceress : wizard));
-		// pass to see if any are dead
-		bool cleanPass = false;
-		while (!cleanPass)
+		SAttackReport* report = static_cast<CSpell*>(givenCard)->Attack();
+		while (!report->killList.empty())
 		{
-			cleanPass = true;
-			for (int i = 0; i < enemies->size(); i++)
-			{
-				if (enemies->at(i)->GetHealth() <= 0)
-				{
-					SendCardToGraveyard(enemies->at(i));
-
-					// reset and recheck
-					cleanPass = false;
-					break; 
-				}
-			}
+			SendCardToGraveyard(static_cast<CDamageable*>(report->killList.at(0)));
+			report->killList.erase(report->killList.begin());
 		}
 	}
 	else

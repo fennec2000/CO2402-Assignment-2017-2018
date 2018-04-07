@@ -17,6 +17,6 @@ public:
 	inline void AddCardToHand(CCard* givenCard) { hand.push_back(givenCard); };
 	CCard* PlayCard();
 	int GetHandSize() { return hand.size(); };
-	CDamageable* Attack() { return nullptr; };
+	SAttackReport* Attack() { return nullptr; };
 };
 

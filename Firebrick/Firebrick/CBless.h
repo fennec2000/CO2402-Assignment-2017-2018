@@ -11,6 +11,6 @@ private:
 public:
 	CBless(string givenName, int givenDamage, int givenHeal, CPlayer* enemy, CPlayer* player, vector<CDamageable*>* enemyField, vector<CDamageable*>* playerField);
 	virtual ~CBless();
-	CDamageable* Attack();
+	SAttackReport* Attack();
 };
 
