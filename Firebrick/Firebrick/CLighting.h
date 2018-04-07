@@ -1,13 +1,11 @@
 #pragma once
 #include "CPlayer.h"
-#include "CDamageable.h"
+#include "CSpell.h"
 
 
-class CLighting : public CDamageable
+class CLighting : public CSpell
 {
 private:
-	CPlayer* pEnemyPlayer;
-	vector<CDamageable*>* pEnemyField;
 public:
 	CLighting(string givenName, int givenDamage, CPlayer* enemy, vector<CDamageable*>* enemyField);
 	virtual ~CLighting();

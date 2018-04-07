@@ -73,39 +73,44 @@ void CCore::LoadDeck(EPlayer givenPlayer, string inputFile)
 					i++;
 				}
 			}
-			if (stoi(arr[0]) == Minion)
+
+			ECardType newCardType = static_cast<ECardType>(stoi(arr[0]));
+			CCard* card;
+
+			if (newCardType == Minion)
 			{
-				CCard* card;
 				CMinion* newCard = new CMinion(arr[1], stoi(arr[2]), stoi(arr[3]), givenPlayer, pEnemyPlayer, pField->GetField(enemy));
-				card = (CCard*)newCard;
+				card = static_cast<CCard*>(newCard);
 				pField->AddCardToDeck(givenPlayer, card);
 			}
-			else if (stoi(arr[0]) == Fireball)
+			else if (newCardType == Fireball)
 			{
-				CCard* card;
 				CFireBall* newCard = new CFireBall(arr[1], stoi(arr[2]), pEnemyPlayer, pField->GetField(enemy));
-				card = (CCard*)newCard;
+				card = static_cast<CCard*>(newCard);
 				pField->AddCardToDeck(givenPlayer, card);
 			}
-			else if (stoi(arr[0]) == Lighting)
+			else if (newCardType == Lighting)
 			{
-				CCard* card;
 				CLighting* newCard = new CLighting(arr[1], stoi(arr[2]), pEnemyPlayer, pField->GetField(enemy));
-				card = (CCard*)newCard;
+				card = static_cast<CCard*>(newCard);
 				pField->AddCardToDeck(givenPlayer, card);
 			}
-			else if (stoi(arr[0]) == Bless)
+			else if (newCardType == Bless)
 			{
-				CCard* card;
 				CBless* newCard = new CBless(arr[1], stoi(arr[2]), stoi(arr[3]), pEnemyPlayer, ((givenPlayer) ? pWizard : pSorceress), pField->GetField(enemy), pField->GetField(givenPlayer));
-				card = (CCard*)newCard;
+				card = static_cast<CCard*>(newCard);
 				pField->AddCardToDeck(givenPlayer, card);
 			}
-			else if (stoi(arr[0]) == Vampire)
+			else if (newCardType == Vampire)
 			{
-				CCard* card;
 				CVampire* newCard = new CVampire(arr[1], stoi(arr[2]), stoi(arr[3]), stoi(arr[4]), givenPlayer, pEnemyPlayer, pField->GetField(enemy));
-				card = (CCard*)newCard;
+				card = static_cast<CCard*>(newCard);
+				pField->AddCardToDeck(givenPlayer, card);
+			}
+			else if (newCardType == Wall) // I wanna build a wall...
+			{
+				CWall* newCard = new CWall(arr[1], stoi(arr[2]), stoi(arr[3]), givenPlayer, pEnemyPlayer, pField->GetField(enemy));
+				card = static_cast<CCard*>(newCard);
 				pField->AddCardToDeck(givenPlayer, card);
 			}
 		}
@@ -114,6 +119,8 @@ void CCore::LoadDeck(EPlayer givenPlayer, string inputFile)
 
 	else
 		cout << "Unable to open file" << endl;
+
+	pField->ReverseDeck(givenPlayer);
 }
 
 void CCore::Draw(EPlayer player)
@@ -193,13 +200,13 @@ void CCore::ActivateCard(EPlayer player, CCard* givenCard)
 {
 	cout << ((player) ? "Wizard" : "Sorceress") << " plays " << givenCard->GetName() << endl;
 	ECardType chosenCardType = givenCard->GetType();
-	if (chosenCardType == Minion)
+	if (chosenCardType == Minion || chosenCardType == Vampire || chosenCardType == Wall)
 	{
-		pField->AddCardToField(player, (CMinion*)givenCard);
+		pField->AddCardToField(player, static_cast<CMinion*>(givenCard));
 	}
-	else if (chosenCardType == Fireball)
+	else if (chosenCardType == Fireball || chosenCardType == Bless)
 	{
-		CDamageable* target = static_cast<CFireBall*>(givenCard)->Attack();
+		CDamageable* target = static_cast<CSpell*>(givenCard)->Attack();
 		if (target->GetHealth() <= 0)
 			SendCardToGraveyard(target);
 	}
@@ -224,16 +231,6 @@ void CCore::ActivateCard(EPlayer player, CCard* givenCard)
 				}
 			}
 		}
-	}
-	else if (chosenCardType == Bless)
-	{
-		CDamageable* target = static_cast<CBless*>(givenCard)->Attack();
-		if (target->GetHealth() <= 0)
-			SendCardToGraveyard(target);
-	}
-	else if (chosenCardType == Vampire)
-	{
-		pField->AddCardToField(player, (CMinion*)givenCard);
 	}
 	else
 	{

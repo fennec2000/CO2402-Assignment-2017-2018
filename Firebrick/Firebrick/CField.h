@@ -28,5 +28,6 @@ public:
 	void RemoveFromField(EPlayer player, CDamageable* card);
 	void SetFieldActive(EPlayer player);
 	void ShuffleDeck(EPlayer player);
+	void ReverseDeck(EPlayer player);
 };
 

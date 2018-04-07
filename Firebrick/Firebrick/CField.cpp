@@ -181,10 +181,24 @@ void CField::RemoveFromField(EPlayer player, CDamageable* card)
 	switch (player)
 	{
 	case sorceress:
-		sorceressField.erase(remove(sorceressField.begin(), sorceressField.end(), card), sorceressField.end());
+		for (int i = 0; i < sorceressField.size(); i++)
+		{
+			if (sorceressField.at(i) == card)
+			{
+				sorceressField.erase(sorceressField.begin() + i);
+				break;
+			}
+		}
 		break;
 	case wizard:
-		wizardField.erase(remove(wizardField.begin(), wizardField.end(), card), wizardField.end());
+		for (int i = 0; i < wizardField.size(); i++)
+		{
+			if (wizardField.at(i) == card)
+			{
+				wizardField.erase(wizardField.begin() + i);
+				break;
+			}
+		}
 		break;
 	default:
 		break;
@@ -219,6 +233,21 @@ void CField::ShuffleDeck(EPlayer player)
 	for (int i = 0; i < playerDeck->size(); i++)
 	{
 		swap(playerDeck->at(i), playerDeck->at(Random(playerDeck->size())));
+	}
+}
+
+void CField::ReverseDeck(EPlayer player)
+{
+	switch (player)
+	{
+	case sorceress:
+		reverse(sorceressDeck.begin(), sorceressDeck.end());
+		break;
+	case wizard:
+		reverse(wizardDeck.begin(), wizardDeck.end());
+		break;
+	default:
+		break;
 	}
 }
 

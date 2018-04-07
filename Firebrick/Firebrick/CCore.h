@@ -1,10 +1,10 @@
 #pragma once
 #include "CPlayer.h"
+#include "CWall.h"
 #include "CVampire.h"
 #include "CBless.h"
 #include "CLighting.h"
 #include "CFireBall.h"
-#include "CMinion.h"
 #include "CField.h"
 #include <string> // string
 #include <iostream> // cout

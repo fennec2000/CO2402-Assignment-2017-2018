@@ -19,7 +19,22 @@ CMinion::~CMinion()
 CDamageable* CMinion::Attack()
 {
 	int enemySize = pEnemyField->size();
-	if (enemySize > 0) // attack minion
+	vector<CDamageable*> walls;
+
+	// find walls
+	for (int i = 0; i < enemySize; i++)
+	{
+		if (pEnemyField->at(i)->GetType() == ECardType::Wall)
+			walls.push_back(pEnemyField->at(i));
+	}
+
+	if (walls.size() > 0) // random between walls
+	{
+		int randPick = Random(walls.size() - 1);
+		walls.at(randPick)->TakeDamage(this, damage); // take down that wall like the coolaid man oh-yeah!
+		return walls.at(randPick);
+	}
+	else if (enemySize > 0) // attack minion
 	{
 		int randPick = Random(enemySize - 1);
 		pEnemyField->at(randPick)->TakeDamage(this, damage);
@@ -30,4 +45,5 @@ CDamageable* CMinion::Attack()
 		pEnemyPlayer->TakeDamage(this, damage);
 		return pEnemyPlayer;
 	}
+	
 }

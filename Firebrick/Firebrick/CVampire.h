@@ -1,7 +1,7 @@
 #pragma once
 #include "CMinion.h"
 
-class CVampire : protected CMinion
+class CVampire : public CMinion
 {
 private:
 	int lifesteal;

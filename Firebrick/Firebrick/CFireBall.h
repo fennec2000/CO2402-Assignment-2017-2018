@@ -1,12 +1,10 @@
 #pragma once
-#include "CPlayer.h"
+#include "CSpell.h"
 #include "FirebrickMath.h"
 
-class CFireBall : public CDamageable
+class CFireBall : public CSpell
 {
 private:
-	CPlayer* pEnemyPlayer;
-	vector<CDamageable*>* pEnemyField;
 public:
 	CFireBall(string givenName, int givenDamage, CPlayer* enemy, vector<CDamageable*>* enemyField);
 	virtual ~CFireBall();
