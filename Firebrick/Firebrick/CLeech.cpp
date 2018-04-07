@@ -21,8 +21,10 @@ CLeech::~CLeech()
 SAttackReport* CLeech::Attack()
 {
 	SAttackReport* report = CMinion::Attack();
-	int playerNewHealth = pPlayer->GetHealth() + 2;
+	pPlayer->TakeDamage(this, -damage);
+	/*int playerNewHealth = pPlayer->GetHealth() + 2;
 	pPlayer->SetHealth(playerNewHealth);
-	cout << name << " heals " << pPlayer->GetName() << ": " << pPlayer->GetName() << " health now " << playerNewHealth << endl;
+	cout << name << " heals " << pPlayer->GetName() << ": " << pPlayer->GetName() << " health now " << playerNewHealth << endl;*/
 	return report;
 }
+

@@ -1,5 +1,7 @@
 #pragma once
 #include "CPlayer.h"
+#include "CArmour.h"
+#include "CSword.h"
 #include "CLeech.h"
 #include "CTrample.h"
 #include "CHorde.h"

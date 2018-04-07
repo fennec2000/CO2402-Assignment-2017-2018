@@ -72,6 +72,15 @@
     <ClInclude Include="CLeech.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="CSword.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="CEquipment.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="CArmour.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -123,6 +132,15 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="CLeech.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="CSword.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="CEquipment.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="CArmour.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

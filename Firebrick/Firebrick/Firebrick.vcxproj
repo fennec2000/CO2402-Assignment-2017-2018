@@ -142,10 +142,12 @@
     <Text Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="CArmour.h" />
     <ClInclude Include="CBless.h" />
     <ClInclude Include="CCard.h" />
     <ClInclude Include="CCore.h" />
     <ClInclude Include="CDamageable.h" />
+    <ClInclude Include="CEquipment.h" />
     <ClInclude Include="CField.h" />
     <ClInclude Include="CFireBall.h" />
     <ClInclude Include="CHorde.h" />
@@ -154,6 +156,7 @@
     <ClInclude Include="CMinion.h" />
     <ClInclude Include="CPlayer.h" />
     <ClInclude Include="CSpell.h" />
+    <ClInclude Include="CSword.h" />
     <ClInclude Include="CTrample.h" />
     <ClInclude Include="CVampire.h" />
     <ClInclude Include="CWall.h" />
@@ -162,10 +165,12 @@
     <ClInclude Include="targetver.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="CArmour.cpp" />
     <ClCompile Include="CBless.cpp" />
     <ClCompile Include="CCard.cpp" />
     <ClCompile Include="CCore.cpp" />
     <ClCompile Include="CDamageable.cpp" />
+    <ClCompile Include="CEquipment.cpp" />
     <ClCompile Include="CField.cpp" />
     <ClCompile Include="CFireBall.cpp" />
     <ClCompile Include="CHorde.cpp" />
@@ -174,6 +179,7 @@
     <ClCompile Include="CMinion.cpp" />
     <ClCompile Include="CPlayer.cpp" />
     <ClCompile Include="CSpell.cpp" />
+    <ClCompile Include="CSword.cpp" />
     <ClCompile Include="CTrample.cpp" />
     <ClCompile Include="CVampire.cpp" />
     <ClCompile Include="CWall.cpp" />

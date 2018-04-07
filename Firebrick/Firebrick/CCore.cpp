@@ -132,6 +132,18 @@ void CCore::LoadDeck(EPlayer givenPlayer, string inputFile)
 				card = static_cast<CCard*>(newCard);
 				pField->AddCardToDeck(givenPlayer, card);
 			}
+			else if (newCardType == Sword)
+			{
+				CSword* newCard = new CSword(arr[1], stoi(arr[2]), ((givenPlayer) ? pWizard : pSorceress), pField->GetField(givenPlayer));
+				card = static_cast<CCard*>(newCard);
+				pField->AddCardToDeck(givenPlayer, card);
+			}
+			else if (newCardType == Amour)
+			{
+				CArmour* newCard = new CArmour(arr[1], stoi(arr[2]), ((givenPlayer) ? pWizard : pSorceress), pField->GetField(givenPlayer));
+				card = static_cast<CCard*>(newCard);
+				pField->AddCardToDeck(givenPlayer, card);
+			}
 		}
 		myfile.close();
 	}
@@ -222,7 +234,8 @@ void CCore::ActivateCard(EPlayer player, CCard* givenCard)
 	{
 		pField->AddCardToField(player, static_cast<CMinion*>(givenCard));
 	}
-	else if (chosenCardType == Fireball || chosenCardType == Bless || chosenCardType == Lighting) // cast spells
+	else if (chosenCardType == Fireball || chosenCardType == Bless || chosenCardType == Lighting
+		) // cast spells
 	{
 		SAttackReport* report = static_cast<CSpell*>(givenCard)->Attack();
 		while (!report->killList.empty())
@@ -230,6 +243,10 @@ void CCore::ActivateCard(EPlayer player, CCard* givenCard)
 			SendCardToGraveyard(static_cast<CDamageable*>(report->killList.at(0)));
 			report->killList.erase(report->killList.begin());
 		}
+	}
+	else if (chosenCardType == Sword || chosenCardType == Amour) // cast equipment
+	{
+		SAttackReport* report = static_cast<CEquipment*>(givenCard)->Attack();
 	}
 	else
 	{

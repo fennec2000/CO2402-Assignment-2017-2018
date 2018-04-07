@@ -14,6 +14,7 @@ class CDamageable : public CCard
 protected:
 	int health;
 	int damage;
+	int defence = 0;
 	bool active = false;
 	bool graveable = true;
 	SAttackReport currentAttackReport;
@@ -28,4 +29,6 @@ public:
 	inline void SetActiveStatus(bool givenStatus) { active = givenStatus; };
 	inline bool GetActiveStatus() { return active; };
 	bool GetGraveable() { return graveable; };
+	void IncreaseDamage(CDamageable* caster, int damageIncrease);
+	void IncreaseAmour(CDamageable* caster, int amourIncrease);
 };
